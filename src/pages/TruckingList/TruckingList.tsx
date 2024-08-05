@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -160,26 +160,26 @@ function TruckingList() {
     setFilters({});
     setPageNo(1);
   };
-  async function getData() {
+  const getData = useCallback(() => {
     setIsLoading(false);
     toast.dismiss();
     setTruckingData(data);
-  }
+  }, [data]);
 
   useEffect(() => {
     getData();
-  }, [data?.length]);
+  }, [getData]);
+  console.log(data);
 
   useEffect(() => {
-    setTruckingData(data);
     setFilteredData(data);
   }, [data]);
   useEffect(() => {
     const sorted = applySort(filteredData);
     setFilteredData(sorted);
   }, [sortConfig, sortColumnId]);
-  
-    // this solution we will use it if there is endpoint
+
+  // this solution we will use it if there is endpoint
   // async function getData() {
   //   toast.loading("Loading...");
   //   const response = await truckingInstance.getTruckingList({
