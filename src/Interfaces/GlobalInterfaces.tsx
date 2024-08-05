@@ -42,11 +42,11 @@ export interface ITruckingListData {
   power_units: number;
   mcs_150_form_date: string;
   out_of_service_date: string;
-  state_carrier_id_number: number | null;
+  state_carrier_id_number: number;
   duns_number: string;
   drivers: number;
   mcs_150_mileage_year: string | number;
   id: number;
-  credit_score: string | null;
+  credit_score: string;
   record_status: string;
 }

@@ -41,15 +41,14 @@ export function DataFromExcelProvider({
     power_units: 0,
     mcs_150_form_date: "",
     out_of_service_date: "",
-    state_carrier_id_number: null,
+    state_carrier_id_number: "" || 0,
     duns_number: "",
     drivers: 0,
     mcs_150_mileage_year: "0",
     id: 0,
-    credit_score: null,
+    credit_score: "",
     record_status: "",
   };
-
   async function fetchData() {
     try {
       // fetching xlsx file from file system

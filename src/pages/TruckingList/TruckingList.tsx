@@ -169,7 +169,6 @@ function TruckingList() {
   useEffect(() => {
     getData();
   }, [getData]);
-  console.log(data);
 
   useEffect(() => {
     setFilteredData(data);
