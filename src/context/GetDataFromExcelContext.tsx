@@ -52,6 +52,7 @@ export function DataFromExcelProvider({
 
   async function fetchData() {
     try {
+      // fetching xlsx file from file system
       const response = await fetch(`${window.origin}/data/data.xlsx`);
       if (!response.ok) {
         throw new Error("Network response was not ok");

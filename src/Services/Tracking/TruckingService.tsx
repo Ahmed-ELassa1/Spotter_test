@@ -4,7 +4,8 @@ import {
   IResponseList,
   IGetTruckingBody,
 } from "../../Interfaces/GlobalInterfaces";
-import truckingData from "../../utils/TruckingData"; // Adjust the path as needed
+
+// survice used to handle all trucking cruds like getAll , getById , delete and Update
 export class TruckingService extends HTTPBaseService {
   private static classInstance?: TruckingService;
   constructor() {
@@ -16,7 +17,7 @@ export class TruckingService extends HTTPBaseService {
     }
     return this.classInstance;
   }
-
+  // get All trucking data from endpoint
   public getTruckingList(
     body: IGetTruckingBody
   ): Promise<AxiosResponse<IResponseList>> {

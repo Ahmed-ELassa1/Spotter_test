@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" Component={TruckingList}></Route>
+        <Route path="/" index={true} element={<TruckingList />} />
       </Routes>
       <ToastContainer
         limit={6}

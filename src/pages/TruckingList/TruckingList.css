@@ -1,27 +1,32 @@
 .trucking-page {
+  padding: 24px;
+  .trucking-page-container {
     padding: 24px;
     margin: auto;
-
+    .sorting-icon {
+      cursor: pointer;
+    }
     .trucking-page-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 3;
-        background-color: #aaaaaa52;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+      background-color: #aaaaaa52;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-        svg {
-            font-size: 40px;
-            color: #fb5615;
-        }
+      svg {
+        font-size: 40px;
+        color: #fb5615;
+      }
     }
 
     .grid-empty-cell {
-        text-align: center;
-        height: 300px;
+      text-align: center;
+      height: 300px;
     }
+  }
 }

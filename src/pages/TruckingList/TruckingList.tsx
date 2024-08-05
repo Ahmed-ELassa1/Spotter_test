@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { toast } from "react-toastify";
-import { TruckingService } from "../../Services/Tracking/TruckingService";
+// import { TruckingService } from "../../Services/Tracking/TruckingService";
 import { ITruckingListData } from "../../Interfaces/GlobalInterfaces";
 import useDataFromExcelContext from "../../context/GetDataFromExcelContext";
 import {
@@ -16,13 +16,7 @@ import {
   SortAscendingOutlined,
 } from "@ant-design/icons";
 import "./TruckingList.css";
-import {
-  Skeleton,
-  Pagination,
-  PaginationItem,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Skeleton, Pagination, PaginationItem, Button } from "@mui/material";
 import AdvancedSearchModal from "../../components/AdvancedSearchModel";
 interface Column {
   id: keyof ITruckingListData;
@@ -33,7 +27,7 @@ interface Column {
 }
 function TruckingList() {
   /*_________________ States _________________*/
-  const truckingInstance = new TruckingService();
+  // const truckingInstance = new TruckingService(); //this service you can use if you will get data from Api
   const { data } = useDataFromExcelContext();
   const [truckingData, setTruckingData] = useState<ITruckingListData[]>([]);
   const [filteredData, setFilteredData] = useState<ITruckingListData[]>([]);
@@ -48,50 +42,62 @@ function TruckingList() {
     {
       id: "data_source_modified_dt",
       label: "data_source_modified_dt",
-      minWidth: 100,
+      align: "right",
+      minWidth: 180,
     },
     {
       id: "entity_type",
       label: "entity_type",
-      minWidth: 100,
       align: "right",
+      minWidth: 150,
     },
     {
       id: "operating_status",
       label: "operating_status",
-      minWidth: 100,
+      align: "right",
+      minWidth: 150,
     },
     {
       id: "legal_name",
       label: "legal_name",
-      minWidth: 100,
+      align: "right",
+      minWidth: 150,
     },
     {
       id: "dba_name",
       label: "dba_name",
-      minWidth: 100,
+      align: "right",
+      minWidth: 150,
     },
     {
       id: "physical_address",
       label: "physical_address",
-      minWidth: 100,
+      align: "right",
+      minWidth: 150,
     },
     {
       id: "phone",
       label: "phone",
-      minWidth: 100,
+      align: "right",
+      minWidth: 150,
     },
     {
       id: "usdot_number",
       label: "usdot_number",
+      align: "right",
+      minWidth: 150,
     },
     {
       id: "mc_mx_ff_number",
       label: "mc_mx_ff_number",
+      align: "right",
+      minWidth: 150,
     },
     {
       id: "power_units",
       label: "power_units",
+      align: "right",
+      minWidth: 150,
     },
   ];
   const [pageNo, setPageNo] = useState(1);
@@ -101,12 +107,6 @@ function TruckingList() {
   /*_________________ Handlers _________________*/
   const handleChangePage = (event: unknown, newPage: number) => {
     setPageNo(newPage);
-  };
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPageNo(0);
   };
 
   const handleSort = (columnId: keyof ITruckingListData) => {
@@ -118,7 +118,6 @@ function TruckingList() {
     setSortColumnId(columnId);
   };
   const applySort = (data: ITruckingListData[]) => {
-    console.log("sort");
     if (!sortColumnId) return data;
 
     const sortedData = [...data].sort((a: any, b: any) => {
@@ -142,7 +141,6 @@ function TruckingList() {
   };
 
   const handleSearch = (filters: Partial<ITruckingListData>) => {
-    // Apply filtering logic here
     const filtered = data?.filter((item: any) =>
       Object?.keys(filters).every((key: any) =>
         item[key as keyof ITruckingListData]
@@ -172,7 +170,16 @@ function TruckingList() {
     getData();
   }, [data?.length]);
 
-  // this solution we will use it if there is endpoint
+  useEffect(() => {
+    setTruckingData(data);
+    setFilteredData(data);
+  }, [data]);
+  useEffect(() => {
+    const sorted = applySort(filteredData);
+    setFilteredData(sorted);
+  }, [sortConfig, sortColumnId]);
+  
+    // this solution we will use it if there is endpoint
   // async function getData() {
   //   toast.loading("Loading...");
   //   const response = await truckingInstance.getTruckingList({
@@ -189,21 +196,12 @@ function TruckingList() {
   // useEffect(() => {
   //   getData();
   // }, [pageNo, rowsPerPage]);
-  useEffect(() => {
-    setTruckingData(data);
-    setFilteredData(data);
-  }, [data]);
-  useEffect(() => {
-    const sorted = applySort(filteredData);
-    setFilteredData(sorted);
-  }, [sortConfig, sortColumnId]);
   return (
-    <>
+    <div className="trucking-page">
       <div>
         <Button variant="contained" onClick={handleOpenModal}>
           Advanced Search
         </Button>
-        {/* Include your table rendering logic here, using filteredData instead of truckingData */}
         <AdvancedSearchModal
           open={isModalOpen}
           onClose={handleCloseModal}
@@ -212,11 +210,13 @@ function TruckingList() {
           gridDataHeaders={gridDataHeaders}
         />
       </div>
-      <div className="trucking-page">
-        {isLoading && (
+      <div className="trucking-page-container">
+        {isLoading ? (
           <div className="trucking-page-overlay">
             <LoadingOutlined />
           </div>
+        ) : (
+          ""
         )}
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 440 }}>
@@ -227,7 +227,11 @@ function TruckingList() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth }}
+                      style={{
+                        minWidth: column.minWidth,
+                      }}
+                      height={50}
+                      className="trucking-table-header"
                       onClick={() => {
                         handleSort(column.id);
                         setSortColumnId(column.id);
@@ -235,9 +239,9 @@ function TruckingList() {
                     >
                       {column.label}
                       {sortConfig === "asc" && sortColumnId === column.id ? (
-                        <SortAscendingOutlined />
+                        <SortAscendingOutlined className="sorting-icon" />
                       ) : (
-                        <SortDescendingOutlined />
+                        <SortDescendingOutlined className="sorting-icon" />
                       )}
                     </TableCell>
                   ))}
@@ -282,6 +286,7 @@ function TruckingList() {
                       );
                     })
                 ) : (
+                  // this will appear if there is not data in the excel
                   <TableRow>
                     <TableCell
                       colSpan={gridDataHeaders.length - 1}
@@ -320,7 +325,7 @@ function TruckingList() {
           />
         </Paper>
       </div>
-    </>
+    </div>
   );
 }
 

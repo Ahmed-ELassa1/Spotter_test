@@ -1,8 +1,7 @@
 {
-  "homepage":"http://Ahmed-ELassa1.github.io/Spotter_test",
   "name": "spotter-test",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
@@ -17,7 +16,6 @@
     "@types/react-dom": "^18.3.0",
     "antd": "^5.20.0",
     "axios": "^1.7.3",
-    "gh-pages": "^6.1.1",
     "install": "^0.13.0",
     "npm": "^10.8.2",
     "react": "^18.3.1",
@@ -32,8 +30,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "predeploy":"npm run build",
-    "deploy":"gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
